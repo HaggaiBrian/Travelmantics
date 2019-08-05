@@ -176,7 +176,7 @@ public class DealActivity extends AppCompatActivity {
         txtPrice.setEnabled(isEnabled);
     }
     private void showImage(String url) {
-        if (url != null && url.isEmpty() == false) {
+        if (url != null && !url.isEmpty()) {
             int width = Resources.getSystem().getDisplayMetrics().widthPixels;
             Picasso.with(this)
                     .load(url)

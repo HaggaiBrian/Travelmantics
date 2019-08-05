@@ -61,7 +61,6 @@ public class TravelDeal implements Serializable {
         this.imageUrl = imageUrl;
     }
 
-
     public String getImageName() {
         return imageName;
     }
