@@ -1,4 +1,4 @@
-package com.example.travelmantics;
+package com.example.travelmantics.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.travelmantics.EventActivity_insert_edit_delete;
+import com.example.travelmantics.Helper.FirebaseUtil;
+import com.example.travelmantics.Model.EventModel;
+import com.example.travelmantics.R;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -17,18 +21,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
-public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder>{
-    ArrayList<TravelDeal> deals;
+public class EventAdapter extends RecyclerView.Adapter<EventAdapter.DealViewHolder>{
+    ArrayList<EventModel> deals;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
     private ChildEventListener mChildListener;
     private ImageView imageDeal;
 
-    public DealAdapter() {
+    public EventAdapter() {
         //FirebaseUtil.openFbReference("traveldeals");
         mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
         mDatabaseReference = FirebaseUtil.mDatabaseReference;
@@ -36,12 +38,12 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
         mChildListener = new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                TravelDeal cd = dataSnapshot.getValue(TravelDeal.class);
+                EventModel cd = dataSnapshot.getValue(EventModel.class);
                 Log.d("Deal: ", cd.getTitle());
                 cd.setId(dataSnapshot.getKey());
                 deals.add(cd);
                 notifyItemInserted(deals.size()-1);
-                //TravelDeal
+                //EventModel
             }
 
             @Override
@@ -71,14 +73,14 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
     public DealViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         View itemView = LayoutInflater.from(context)
-                .inflate(R.layout.rv_row, parent, false);
+                .inflate(R.layout.row_viewholder, parent, false);
         return new DealViewHolder(itemView);
 
     }
 
     @Override
     public void onBindViewHolder(DealViewHolder holder, int position) {
-        TravelDeal deal = deals.get(position);
+        EventModel deal = deals.get(position);
         holder.bind(deal);
     }
 
@@ -102,7 +104,7 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
             itemView.setOnClickListener(this);
         }
 
-        public void bind(TravelDeal deal) {
+        public void bind(EventModel deal) {
             tvTitle.setText(deal.getTitle());
             tvDescription.setText(deal.getDescription());
             tvPrice.setText(deal.getPrice());
@@ -113,8 +115,8 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
         public void onClick(View view) {
             int position = getAdapterPosition();
             Log.d("Click", String.valueOf(position));
-            TravelDeal selectedDeal = deals.get(position);
-            Intent intent = new Intent(view.getContext(), DealActivity.class);
+            EventModel selectedDeal = deals.get(position);
+            Intent intent = new Intent(view.getContext(), EventActivity_insert_edit_delete.class);
             intent.putExtra("Deal", selectedDeal);
             view.getContext().startActivity(intent);
         }

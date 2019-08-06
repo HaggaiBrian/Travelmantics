@@ -1,10 +1,10 @@
-package com.example.travelmantics;
+package com.example.travelmantics.Helper;
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.widget.Toast;
 
+import com.example.travelmantics.ListActivity;
+import com.example.travelmantics.Model.EventModel;
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -27,7 +27,7 @@ public class FirebaseUtil {
     public static FirebaseStorage mStorage;
     public static StorageReference mStorageRef;
     public static FirebaseAuth.AuthStateListener mAuthListener;
-    public static ArrayList<TravelDeal> mDeals;
+    public static ArrayList<EventModel> mDeals;
     private static final int RC_SIGN_IN = 123;
     private static ListActivity caller;
     private FirebaseUtil(){};
@@ -58,7 +58,7 @@ public class FirebaseUtil {
 
         }
 
-        mDeals = new ArrayList<TravelDeal>();
+        mDeals = new ArrayList<EventModel>();
         mDatabaseReference = mFirebaseDatabase.getReference().child(ref);
     }
 

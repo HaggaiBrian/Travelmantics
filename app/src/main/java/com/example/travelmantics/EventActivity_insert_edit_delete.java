@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.travelmantics.Helper.FirebaseUtil;
+import com.example.travelmantics.Model.EventModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -24,7 +26,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-public class DealActivity extends AppCompatActivity {
+public class EventActivity_insert_edit_delete extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
     private static final int PICTURE_RESULT = 42; //the answer to everything
@@ -32,11 +34,11 @@ public class DealActivity extends AppCompatActivity {
     EditText txtDescription;
     EditText txtPrice;
     ImageView imageView;
-    TravelDeal deal;
+    EventModel deal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_deal);
+        setContentView(R.layout.activity_event_insert_edit_delete);
         mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
         mDatabaseReference = FirebaseUtil.mDatabaseReference;
         txtTitle = (EditText) findViewById(R.id.txtTitle);
@@ -44,9 +46,9 @@ public class DealActivity extends AppCompatActivity {
         txtPrice = (EditText) findViewById(R.id.txtPrice);
         imageView = (ImageView) findViewById(R.id.image);
         Intent intent = getIntent();
-        TravelDeal deal = (TravelDeal) intent.getSerializableExtra("Deal");
+        EventModel deal = (EventModel) intent.getSerializableExtra("Deal");
         if (deal==null) {
-            deal = new TravelDeal();
+            deal = new EventModel();
         }
         this.deal = deal;
         txtTitle.setText(deal.getTitle());
@@ -144,7 +146,7 @@ public class DealActivity extends AppCompatActivity {
         }
         mDatabaseReference.child(deal.getId()).removeValue();
         Log.d("image name", deal.getImageName());
-        if(deal.getImageName() != null && deal.getImageName().isEmpty() == false) {
+        if(deal.getImageName() != null && !deal.getImageName().isEmpty()) {
             StorageReference picRef = FirebaseUtil.mStorage.getReference().child(deal.getImageName());
             picRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override

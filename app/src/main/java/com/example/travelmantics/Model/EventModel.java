@@ -1,8 +1,8 @@
-package com.example.travelmantics;
+package com.example.travelmantics.Model;
 
 import java.io.Serializable;
 
-public class TravelDeal implements Serializable {
+public class EventModel implements Serializable {
     private String id;
     private String title;
     private String description;
@@ -10,9 +10,9 @@ public class TravelDeal implements Serializable {
     private String imageUrl;
     private String imageName;
 
-    public TravelDeal(){}
+    public EventModel(){}
 
-    public TravelDeal(String title, String description, String price, String imageUrl, String imageName) {
+    public EventModel(String title, String description, String price, String imageUrl, String imageName) {
         this.setId(id);
         this.setTitle(title);
         this.setDescription(description);
